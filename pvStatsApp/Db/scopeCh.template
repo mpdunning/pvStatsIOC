@@ -1,0 +1,131 @@
+### Scope Ch$(CH) ########################################
+record(stringout, "$(P):IOC") {
+  field(DESC, "$(SCOPE)")
+  field(VAL,  "$(IOC)")
+}
+record(waveform, "$(P):OFFSET0:CH$(CH)") {
+  field(DESC, "")
+  field(INP,  "$(SCOPE):WF:CH$(CH):TRACE")
+  field(FTVL, "DOUBLE")
+  field(NELM, "$(NELM)")
+  field(FLNK, "$(P):AS:CH$(CH).PROC")
+}
+record(ao, "$(P):OFFSET:CH$(CH)") {
+  field(DESC, "")
+  field(VAL,  "0")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+  field(FLNK, "$(P):AS:CH$(CH).PROC")
+}
+record(ai, "$(P):SCALE:VERT:CH$(CH)") {
+  field(DESC, "")
+  field(INP,  "$(SCOPE):AO:CH$(CH):SCL CPP")
+  field(EGU,  "V/div")
+  field(PREC, "1")
+  field(FLNK, "$(P):AS:CH$(CH).PROC")
+}
+record(ai, "$(P):SCALE:HOR:CH$(CH)") {
+  field(DESC, "")
+  field(INP,  "$(SCOPE):AI:TIME:DIV CPP")
+  field(EGU,  "s/div")
+  field(PREC, "1")
+  field(FLNK, "$(P):LIM1_SCALED:CH$(CH).PROC")
+}
+record(longout, "$(P):LIM1:CH$(CH)") {
+  field(DESC, "")
+  field(LOPR, "1")
+  field(HOPR, "$(NELM)")
+  field(DRVL, "1")
+  field(DRVH, "$(NELM)")
+  field(VAL,  "0")
+  field(FLNK, "$(P):LIM1_SCALED:CH$(CH).PROC")
+}
+record(calc, "$(P):LIM1_SCALED:CH$(CH)") {
+  field(DESC, "")
+  field(INPA, "$(P):LIM1:CH$(CH)")
+  field(INPB, "$(NELM)")
+  field(INPC, "$(P):SCALE:HOR:CH$(CH)")
+  field(CALC, "A*(10/B)*C")
+  field(EGU,  "s")
+  field(PREC, "2")
+  field(FLNK, "$(P):LIM2_SCALED:CH$(CH).PROC")
+}
+record(longout, "$(P):LIM2:CH$(CH)") {
+  field(DESC, "")
+  field(LOPR, "1")
+  field(HOPR, "$(NELM)")
+  field(DRVL, "1")
+  field(DRVH, "$(NELM)")
+  field(VAL,  "$(NELM)")
+  field(FLNK, "$(P):LIM2_SCALED:CH$(CH).PROC")
+}
+record(calc, "$(P):LIM2_SCALED:CH$(CH)") {
+  field(DESC, "")
+  field(INPA, "$(P):LIM2:CH$(CH)")
+  field(INPB, "$(NELM)")
+  field(INPC, "$(P):SCALE:HOR:CH$(CH)")
+  field(CALC, "A*(10/B)*C")
+  field(EGU,  "s")
+  field(PREC, "2")
+  field(FLNK, "$(P):DELTA_SCALED:CH$(CH).PROC")
+}
+record(calc, "$(P):DELTA_SCALED:CH$(CH)") {
+  field(DESC, "")
+  field(INPA, "$(P):LIM1_SCALED:CH$(CH)")
+  field(INPB, "$(P):LIM2_SCALED:CH$(CH)")
+  field(CALC, "ABS(A-B)")
+  field(EGU,  "s")
+  field(PREC, "2")
+  field(FLNK, "$(P):AS:CH$(CH).PROC")
+}
+record(aSub, "$(P):AS:CH$(CH)"){
+  field(DESC, "Scope stats")
+  field(SNAM, "asScope")
+  field(INPA, "$(SCOPE):WF:CH$(CH):TRACE CPP") field(FTA,  "DOUBLE") field(NOA,  "$(NELM)")
+  field(INPB, "$(P):SCALE:VERT:CH$(CH)")        field(FTB,  "DOUBLE") field(NOB,  "1")
+  field(INPC, "$(P):SCALE:HOR:CH$(CH)")         field(FTC,  "DOUBLE") field(NOC,  "1")
+  field(INPD, "$(SCOPE):AO:CH$(CH):POS CPP")   field(FTD,  "DOUBLE") field(NOD,  "1")
+  field(INPE, "$(P):LIM1:CH$(CH)")              field(FTE,  "SHORT")  field(NOE,  "1")
+  field(INPF, "$(P):LIM2:CH$(CH)")              field(FTF,  "SHORT")  field(NOF,  "1")
+  field(INPG, "$(P):OFFSET0:CH$(CH)")            field(FTG,  "DOUBLE") field(NOG,  "$(NELM)")
+  field(INPH, "$(P):OFFSET:CH$(CH)")           field(FTH,  "DOUBLE") field(NOH,  "1")
+  field(FTVA, "DOUBLE")  field(NOVA, "1")
+  field(FTVB, "DOUBLE")  field(NOVB, "1")
+  field(FTVC, "DOUBLE")  field(NOVC, "1")
+  field(FTVD, "DOUBLE")  field(NOVD, "1")
+  field(FTVE, "DOUBLE")  field(NOVE, "1")
+  field(OUTA, "$(P):MIN:CH$(CH) PP")
+  field(OUTB, "$(P):MAX:CH$(CH) PP")
+  field(OUTC, "$(P):MEAN:CH$(CH) PP")
+  field(OUTD, "$(P):INTEGRAL:CH$(CH) PP")
+  field(OUTE, "$(P):INTEGRAL_SCALED:CH$(CH) PP")
+}
+record(ai, "$(P):MIN:CH$(CH)") {
+  field(DESC, "")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):MAX:CH$(CH)") {
+  field(DESC, "")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):MEAN:CH$(CH)") {
+  field(DESC, "")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):INTEGRAL:CH$(CH)") {
+  field(DESC, "")
+  field(EGU,  "V*pts")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):INTEGRAL_SCALED:CH$(CH)") {
+  field(DESC, "")
+  field(EGU,  "V*s")
+  field(PREC, "$(PREC)")
+}
+
+
+
+

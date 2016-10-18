@@ -1,0 +1,217 @@
+### Stats Inp $(N) ##########################################################
+record(ai, "$(P):INP$(N)") {
+  field(DESC, "Input PV value $(N)")
+  field(INP,  "$(INP)")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+  field(FLNK, "$(P):INP$(N):FO.PROC")
+}
+record(fanout, "$(P):INP$(N):FO") {
+  field(DESC, "Input $(N) FO")
+  field(LNK1, "$(P):COMP$(N):$(J1).PROC")
+  field(LNK2, "$(P):COMP$(N):$(J2).PROC")
+  field(LNK3, "$(P):COMP$(N):$(J3).PROC")
+  field(LNK4, "$(P):COMP$(N):$(J4).PROC")
+  field(LNK5, "$(P):AS:STATS$(N).PROC")
+  field(LNK6, "$(P):INP$(N):COUNTER_CALC.PROC")
+}
+record(stringin, "$(P):INP$(N):DESC") {
+  field(DESC, "Input PV value $(N) desc.")
+#  field(INP,  "$(INP).DESC")
+}
+record(bo, "$(P):INP$(N):DISABLE") {
+  field(DESC, "Input $(N) disable")
+  field(ZNAM, "Enabled")
+  field(ONAM, "Disabled")
+  field(VAL,  "1")
+  field(PINI, "1")
+  field(FLNK, "$(P):INP$(N):DFO.PROC")
+}
+record(dfanout, "$(P):INP$(N):DFO") {
+  field(DESC, "Input $(N) DFO")
+  field(DOL,  "$(P):INP$(N):DISABLE")
+  field(OMSL, "closed_loop")
+  field(OUTA, "$(P):INP$(N).DISA PP")
+  field(OUTB, "$(P):COMP$(N):$(J1).DISA")
+  field(OUTC, "$(P):COMP$(N):$(J2).DISA")
+  field(OUTD, "$(P):COMP$(N):$(J3).DISA")
+  field(OUTE, "$(P):COMP$(N):$(J4).DISA")
+}
+record(compress, "$(P):COMP$(N):$(J1)"){
+  field(DESC, "Last $(J1) samples")
+  field(NSAM, "$(J1)")
+  field(ALG,  "Circular Buffer")
+  field(INP,  "$(P):INP$(N)")
+  field(PREC, "$(PREC)")
+}
+record(compress, "$(P):COMP$(N):$(J2)"){
+  field(DESC, "Last $(J2) samples")
+  field(NSAM, "$(J2)")
+  field(ALG,  "Circular Buffer")
+  field(INP,  "$(P):INP$(N)")
+  field(PREC, "$(PREC)")
+}
+record(compress, "$(P):COMP$(N):$(J3)"){
+  field(DESC, "Last $(J3) samples")
+  field(NSAM, "$(J3)")
+  field(ALG,  "Circular Buffer")
+  field(INP,  "$(P):INP$(N)")
+  field(PREC, "$(PREC)")
+}
+record(compress, "$(P):COMP$(N):$(J4)"){
+  field(DESC, "Last $(J4) samples")
+  field(NSAM, "$(J4)")
+  field(ALG,  "Circular Buffer")
+  field(INP,  "$(P):INP$(N)")
+  field(PREC, "$(PREC)")
+}
+record(aSub, "$(P):AS:STATS$(N)"){
+  field(DESC, "Stats")
+  field(SNAM, "asStats")
+  field(INPA, "$(P):COMP$(N):$(J1)")      field(FTA,  "DOUBLE") field(NOA,  "$(J1)")
+  field(INPB, "$(P):COMP$(N):$(J1).NUSE") field(FTB,  "LONG")   field(NOB,  "1")
+  field(INPC, "$(P):COMP$(N):$(J2)")      field(FTC,  "DOUBLE") field(NOC,  "$(J2)")
+  field(INPD, "$(P):COMP$(N):$(J2).NUSE") field(FTD,  "LONG")   field(NOD,  "1")
+  field(INPE, "$(P):COMP$(N):$(J3)")      field(FTE,  "DOUBLE") field(NOE,  "$(J3)")
+  field(INPF, "$(P):COMP$(N):$(J3).NUSE") field(FTF,  "LONG")   field(NOF,  "1")
+  field(INPG, "$(P):COMP$(N):$(J4)")      field(FTG,  "DOUBLE") field(NOG,  "$(J4)")
+  field(INPH, "$(P):COMP$(N):$(J4).NUSE") field(FTH,  "LONG")   field(NOH,  "1")
+  field(FTVA, "DOUBLE")  field(NOVA, "1")
+  field(FTVB, "DOUBLE")  field(NOVB, "1")
+  field(FTVC, "DOUBLE")  field(NOVC, "1")
+  field(FTVD, "DOUBLE")  field(NOVD, "1")
+  field(FTVE, "DOUBLE")  field(NOVE, "1")
+  field(FTVF, "DOUBLE")  field(NOVF, "1")
+  field(FTVG, "DOUBLE")  field(NOVG, "1")
+  field(FTVH, "DOUBLE")  field(NOVH, "1")
+  field(OUTA, "$(P):INP$(N):AVE:$(J1) PP")
+  field(OUTB, "$(P):INP$(N):STD:$(J1) PP")
+  field(OUTC, "$(P):INP$(N):STD:$(J1):PER PP")
+  field(OUTD, "$(P):INP$(N):AVE:$(J2) PP")
+  field(OUTE, "$(P):INP$(N):STD:$(J2) PP")
+  field(OUTF, "$(P):INP$(N):STD:$(J2):PER PP")
+  field(OUTG, "$(P):INP$(N):AVE:$(J3) PP")
+  field(OUTH, "$(P):INP$(N):STD:$(J3) PP")
+  field(OUTI, "$(P):INP$(N):STD:$(J3):PER PP")
+  field(OUTJ, "$(P):INP$(N):AVE:$(J4) PP")
+  field(OUTK, "$(P):INP$(N):STD:$(J4) PP")
+  field(OUTL, "$(P):INP$(N):STD:$(J4):PER PP")
+}
+record(ai, "$(P):INP$(N):AVE:$(J1)") {
+  field(DESC, "$(J1) shot ave")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):INP$(N):STD:$(J1)") {
+  field(DESC, "$(J1) shot stdev")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):INP$(N):STD:$(J1):PER") {
+  field(DESC, "$(J1) shot stdev (%)")
+  field(EGU,  "%")
+  field(PREC, "2")
+}
+record(ai, "$(P):INP$(N):AVE:$(J2)") {
+  field(DESC, "$(J2) shot ave")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):INP$(N):STD:$(J2)") {
+  field(DESC, "$(J2) shot stdev")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):INP$(N):STD:$(J2):PER") {
+  field(DESC, "$(J2) shot stdev (%)")
+  field(EGU,  "%")
+  field(PREC, "2")
+}
+record(ai, "$(P):INP$(N):AVE:$(J3)") {
+  field(DESC, "$(J3) shot ave")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):INP$(N):STD:$(J3)") {
+  field(DESC, "$(J3) shot stdev")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):INP$(N):STD:$(J3):PER") {
+  field(DESC, "$(J3) shot stdev (%)")
+  field(EGU,  "%")
+  field(PREC, "2")
+}
+record(ai, "$(P):INP$(N):AVE:$(J4)") {
+  field(DESC, "$(J4) shot ave")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):INP$(N):STD:$(J4)") {
+  field(DESC, "$(J4) shot stdev")
+  field(EGU,  "$(EGU)")
+  field(PREC, "$(PREC)")
+}
+record(ai, "$(P):INP$(N):STD:$(J4):PER") {
+  field(DESC, "$(J4) shot stdev (%)")
+  field(EGU,  "%")
+  field(PREC, "2")
+}
+#--- Data dumping -------------------------
+record(ao, "$(P):INP$(N):DATAINT") {
+  field(DESC, "Data sample interval")
+  field(EGU,  "s")
+  field(PREC, "4")
+  field(VAL,  "0.1")
+  field(PINI, "1")
+}
+record(ao, "$(P):INP$(N):TOTALTIME") {
+  field(DESC, "Data total time")
+  field(EGU,  "s")
+  field(PREC, "1")
+  field(VAL,  "5")
+  field(PINI, "1")
+}
+record(bo, "$(P):INP$(N):USEMONITOR") {
+  field(DESC, "Use camonitor")
+  field(ZNAM, "No")
+  field(ONAM, "Yes")
+  field(VAL,  "1")
+  field(PINI, "1")
+}
+record(waveform, "$(P):INP$(N):MSG") {
+  field(DESC, "Status message")
+  field(NELM, "256")
+  field(FTVL, "CHAR")
+  field(PINI, "1")
+}
+record(waveform, "$(P):INP$(N):FILENAME") {
+  field(DESC, "Filename")
+  field(NELM, "512")
+  field(FTVL, "CHAR")
+  field(PINI, "1")
+}
+#--- Counter -------------------------------
+record(calcout, "$(P):INP$(N):COUNTER_CALC") {
+  field(DESC, "Counter calc")
+  field(DISA, "1")
+  field(INPA, "$(P):INP$(N)")
+  field(INPB, "$(P):INP$(N):THRESH")
+  field(INPC, "$(P):INP$(N):COUNT")
+  field(CALC, "A>=B?(C+1):C")
+  field(OUT,  "$(P):INP$(N):COUNT PP")
+}
+record(ai, "$(P):INP$(N):THRESH") {
+  field(DESC, "Counter threshold")
+  field(PREC, "$(PREC)")
+}
+record(longout, "$(P):INP$(N):COUNTER_RESET") {
+  field(DESC, "Counter reset")
+  field(VAL,  "0")
+  field(OUT,  "$(P):INP$(N):COUNT PP")
+}
+record(longin, "$(P):INP$(N):COUNT") {
+  field(DESC, "Counter value")
+  field(VAL,  "0")
+}
+

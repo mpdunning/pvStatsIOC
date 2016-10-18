@@ -1,0 +1,19 @@
+file scopeCh.template {
+pattern
+{CH, NELM, EGU, PREC}
+{ 0,  500,   V,    3}
+{ 1,  500,   V,    3}
+{ 2,  500,   V,    3}
+{ 3,  500,   V,    3}
+}
+
+file stats.template {
+pattern
+{N,                            INP, EGU, PREC,      SCAN,  J1,   J2,    J3}
+{0, "$(P):INTEGRAL_SCALED:CH0 CPP", V*s,    3, "Passive", 100, 1000, 10000}
+{1, "$(P):INTEGRAL_SCALED:CH1 CPP", V*s,    3, "Passive", 100, 1000, 10000}
+{2, "$(P):INTEGRAL_SCALED:CH2 CPP", V*s,    3, "Passive", 100, 1000, 10000}
+{3, "$(P):INTEGRAL_SCALED:CH3 CPP", V*s,    3, "Passive", 100, 1000, 10000}
+}
+
+

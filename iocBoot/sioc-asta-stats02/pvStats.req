@@ -1,0 +1,2 @@
+file ../pvStatsCommon.req P=$(P)
+file ../pvStatsScope.req P=$(P)

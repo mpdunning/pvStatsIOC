@@ -1,0 +1,7 @@
+file stats.template {
+pattern
+{N,                            INP, EGU, PREC, J1,    J2,    J3,     J4}
+{1,  "13PS10:Stats1:Total_RBV CPP",   V,    3, 100, 1000, 10000, 100000}
+{2, "ESB:TUNNEL_EAST:HUMIDITY CPP",   V,    3, 100, 1000, 10000, 100000}
+}
+

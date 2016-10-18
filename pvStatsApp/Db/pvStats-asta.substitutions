@@ -1,0 +1,8 @@
+file stats.template {
+pattern
+{N,                 INP, EGU, PREC, J1,    J2,    J3,     J4}
+{1, "ADC:AS01:12:V CPP",   V,    3, 100, 1000, 10000, 100000}
+{2, "ADC:AS01:13:V CPP",   V,    3, 100, 1000, 10000, 100000}
+{3, "GUN:AS01:1:GN1:RWAV", x,    3,   1,    1,     1,      1}
+}
+
